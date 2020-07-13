@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.apps.cms.dao.dor.TeacherMapper">
+
+  <resultMap id="Teacher"
+             type="com.xl.apps.cms.bean.dor.Teacher">
+             <id column="id" jdbcType="BIGINT" property="id" />
+		    <result column="t_name" jdbcType="VARCHAR" property="t_name" />
+		    <result column="t_num" jdbcType="VARCHAR" property="t_num" />
+		    <result column="sex" jdbcType="VARCHAR" property="sex" />
+		    <result column="class_name" jdbcType="VARCHAR" property="class_name" />
+		    <result column="tel" jdbcType="VARCHAR" property="tel" />
+		    <result column="state" jdbcType="VARCHAR" property="state" />
+		    <result column="descs" jdbcType="VARCHAR" property="descs" />
+		    <result column="alterable" jdbcType="VARCHAR" property="alterable" />
+  </resultMap>
+
+  
+  <select id="selectTeacherByt_num" resultMap="Teacher" parameterType="String">
+  	
+  	select * from dor_teacher where t_num = #{t_num,jdbcType=VARCHAR};
+  
+  </select>
+
+	<select id="selectTeacherAlterable" parameterType="String" resultType="String">
+		select alterable form dor_teacher whrer t_num=#{str,jdbcType=VARCHAR}
+	</select>
+	
+	<update id="updateTeacher" parameterType="com.xl.apps.cms.bean.dor.Teacher">
+		updatae dor_teacher set t_name=#{t_name,jdbcType=VARCHAR},sex=#{sex,jdbcType=VARCHAR},class_name=#{class_name,jdbcType=VARCHAR},
+		tel=#{tel,jdbcType=VARCHAR},state=#{state,jdbcType=VARCHAR},descs=#{descs,jdbcType=VARCHAR}
+		whre t_num = #{t_num,jdbcType=VARCHAR} ;
+	</update>
+  
+</mapper>

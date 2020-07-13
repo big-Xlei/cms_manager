@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.apps.cms.dao.dor.StudentMapper">
+
+  <resultMap id="Student"
+             type="com.xl.apps.cms.bean.dor.Student">
+             <id column="id" jdbcType="BIGINT" property="id" />
+		    <result column="name" jdbcType="VARCHAR" property="name" />
+		    <result column="sex" jdbcType="VARCHAR" property="sex" />
+		    <result column="s_number" jdbcType="VARCHAR" property="s_number" />
+		    <result column="class_name" jdbcType="VARCHAR" property="class_name" />
+		    <result column="s_tel" jdbcType="VARCHAR" property="s_tel" />
+		    <result column="t_name" jdbcType="VARCHAR" property="t_name" />
+		    <result column="door_num" jdbcType="VARCHAR" property="door_num" />
+		    <result column="t_num" jdbcType="VARCHAR" property="t_num" />
+		    <result column="state" jdbcType="VARCHAR" property="state" />
+		    <result column="descs" jdbcType="VARCHAR" property="descs" />
+		    <result column="alterable" jdbcType="VARCHAR" property="alterable" />
+  </resultMap>
+
+ 
+  <!-- 通过寝室号查询寝室内学生信息 -->
+  <select id="selectStudentByDoorNum" resultMap="Student" parameterType="String">
+  	
+  	select * from dor_student where door_num = #{door_num,jdbcType=VARCHAR};
+  
+  </select>
+
+	<!--查询学生是否可更新-->
+
+	<select id="selectStudentAlterable" resultType="String" parameterType="String">
+
+		select alterable from dor_student where s_number=#{str,jdbcType=VARCHAR};
+	</select>
+
+	<!--更新学生信息-->
+	<update id="updateStudent" parameterType="com.xl.apps.cms.bean.dor.Student">
+
+		update dor_student set name = #{name,jdbcType=VARCHAR},sex=#{sex,jdbcType=VARCHAR},class_name=#{class_name,jdbcType=VARCHAR},
+		s_tel=#{s_tel,jdbcType=VARCHAR},t_name=#{t_name,jdbcType=VARCHAR},door_num=#{door_num,jdbcType=VARCHAR},t_num=#{t_num,jdbcType=VARCHAR},
+		state=#{state,jdbcType=VARCHAR},descs=#{descs,jdbcType=VARCHAR} where s_number=#{s_number,jdbcType=VARCHAR};
+	</update>
+
+	<!--删除学生-->
+	<delete id="deleteStudent" parameterType="String">
+
+		delete from dor_student where s_number = #{s_number,jdbcType = VARCHAR}
+	</delete>
+
+	<insert id="insertStudent" parameterType="com.xl.apps.cms.bean.dor.Student">
+		INSERT INTO dor_manage.dor_student(name, sex, s_number, class_name, s_tel, t_name, door_num, t_num, state, descs)
+		VALUES ( #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{s_number,jdbcType=VARCHAR}, #{class_name,jdbcType=VARCHAR}, #{s_tel,jdbcType=VARCHAR}, #{t_name,jdbcType=VARCHAR},
+		#{door_num,jdbcType=VARCHAR}, #{t_num,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{descs,jdbcType=VARCHAR})
+
+	</insert>
+
+	<select id="selectDoorNumCount" parameterType="String" resultType="Integer">
+		select count(*) FROM dor_student where door_num = #{door_num,jdbcType=VARCHAR}
+	</select>
+  
+</mapper>

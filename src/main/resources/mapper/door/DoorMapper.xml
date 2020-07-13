@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.apps.cms.dao.dor.DoorMapper">
+
+  <resultMap id="Door"
+             type="com.xl.apps.cms.bean.dor.Door">
+             <id column="id" jdbcType="BIGINT" property="id" />
+		    <result column="door_num" jdbcType="VARCHAR" property="door_num" />
+		    <result column="froms" jdbcType="BIGINT" property="froms" />
+		    <result column="statue" jdbcType="VARCHAR" property="statue" />
+  </resultMap>
+
+  
+  <select id="selectByFrom" resultMap="Door" parameterType="Long">
+  	
+  	select * from dor_door where froms = #{froms,jdbcType=BIGINT}
+  
+  </select>
+
+    <delete id="deleteDoorByid" parameterType="Long">
+
+        delete from dor_door where id = #{id,jdbcType=BIGINT}
+    </delete>
+  
+</mapper>

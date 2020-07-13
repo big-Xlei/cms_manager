@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xl.apps.cms.dao.dor.RidrepoleMapper">
+
+  <resultMap id="Ridrepole"
+             type="com.xl.apps.cms.bean.dor.Ridrepole">
+             <id column="id" jdbcType="BIGINT" property="id" />
+		    <result column="ridrepole_num" jdbcType="VARCHAR" property="ridrepole_num" />
+		    <result column="floor" jdbcType="VARCHAR" property="floor" />
+		    <result column="status" jdbcType="VARCHAR" property="statue" />
+		    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+            <result column="descs" jdbcType="VARCHAR" property="descs"/>
+  </resultMap>
+
+  <select id="findAllRidrepole" resultMap="Ridrepole">
+    SELECT * FROM dor_ridrepole
+  </select>
+
+  <insert id="insertRidrepoleAndFloor" parameterType="com.xl.apps.cms.bean.dor.Ridrepole">
+  
+  insert into dor_ridrepole(ridrepole_num,floor,status,parent_id,descs)
+   values (#{ridrepole_num,jdbcType=VARCHAR},#{floor,jdbcType=VARCHAR},#{statue,jdbcType=VARCHAR},#{parentId,jdbcType=VARCHAR},#{descs,jdbcType=VARCHAR})
+  
+  </insert>
+
+    <select id="findAllTower" resultMap="Ridrepole">
+        select * from dor_ridrepole where parent_id is null
+    </select>
+
+    <select id="findFloorByParentId" resultMap="Ridrepole" parameterType="String">
+        select * from dor_ridrepole where parent_id = #{parent_id,jdbcType=VARCHAR}
+    </select>
+    <update id="updateRidrepole" parameterType="com.xl.apps.cms.bean.dor.Ridrepole">
+        update dor_ridrepole set ridrepole_num=#{ridrepole_num,jdbcType=VARCHAR},floor=#{floor,jdbcType=VARCHAR},
+        status=#{statue,jdbcType=VARCHAR},parent_id=#{parentId,jdbcType=VARCHAR},descs=#{descs,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteRidreploeByid" parameterType ="Long">
+        delete from dor_ridrepole where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <select id="insureTrue" parameterType="String" resultMap="Ridrepole">
+
+        select IFNULL((select id
+ from dor_ridrepole where ridrepole_num = #{ridre,jdbcType=VARCHAR} and floor = #{floor,jdbcType=VARCHAR}),0) as id
+    </select>
+  
+</mapper>
